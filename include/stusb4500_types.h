@@ -19,6 +19,25 @@
 extern "C" {
 #endif
 
+
+// =============================================
+// === Constants and Enums =====================
+// =============================================
+#define STUSB4500_NVM_UNLOCK             0x95 /** @brief NVM unlock command */
+#define STUSB4500_NVM_LOCK               0x00 /** @brief NVM lock command */
+
+#define STUSB4500_MIN_VOLTAGE_MV         5000  /** @brief Minimum/maximum PDO voltage (mV) */
+#define STUSB4500_MAX_VOLTAGE_MV         20000
+
+#define STUSB4500_MIN_CURRENT_MA         500 /** @brief Minimum/maximum PDO current (mA) */
+#define STUSB4500_MAX_CURRENT_MA         5000
+
+typedef bool (*stusb4500_i2c_write_t)(const uint8_t dev_addr, const uint8_t reg_addr, const void* const data, const uint8_t len);
+typedef bool (*stusb4500_i2c_read_t)(const uint8_t dev_addr, const uint8_t reg_addr, void* const data, const uint8_t len);
+
+typedef bool (*stusb4500_gpio_write_t)(const bool state);
+typedef bool (*stusb4500_gpio_read_t)(bool* const state);
+
 /** @defgroup STUSB4500_Enums Configuration and Status Enums
  *  @brief Enumerations for configuration fields
  *  @{ */
@@ -125,6 +144,19 @@ typedef struct
 } stusb4500_interrupt_status_t;
 
 /** @} */ // end STUSB4500_Status
+
+typedef struct 
+{
+    stusb4500_i2c_write_t i2c_write;
+    stusb4500_i2c_read_t i2c_read;
+
+} stusb4500_hal_t;
+
+typedef struct 
+{
+    stusb4500_hal_t hal;
+    uint8_t address;
+} stusb4500_t;
 
 #ifdef __cplusplus
 }
