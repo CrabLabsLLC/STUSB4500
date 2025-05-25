@@ -1,3 +1,2 @@
 version: "0.1.0"
 description: "A platform agnostic driver for the STUSB4500 USB PD Controller IC"
-dependencies: []
